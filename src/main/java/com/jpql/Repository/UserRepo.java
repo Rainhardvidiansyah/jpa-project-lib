@@ -1,4 +1,6 @@
-package com.jpql.repository;
+package com.jpql.Repository;
+
+import java.util.Optional;
 
 import com.jpql.usermodel.User;
 
@@ -8,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepo extends JpaRepository<User, Long>{
 
-    public User findByEmail(String email);
+    Optional <User> findByEmail(String email);
     
 }
