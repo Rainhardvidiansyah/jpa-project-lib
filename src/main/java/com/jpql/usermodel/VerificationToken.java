@@ -15,11 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "verification_token")
 @Getter @Setter
+@NoArgsConstructor
 public class VerificationToken {
 
     @Id
