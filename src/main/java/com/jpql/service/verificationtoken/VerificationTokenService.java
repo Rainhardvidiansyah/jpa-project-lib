@@ -1,5 +1,7 @@
 package com.jpql.service.verificationtoken;
 
+import java.time.LocalDateTime;
+
 import com.jpql.Repository.VerificationTokenRepo;
 import com.jpql.usermodel.VerificationToken;
 
@@ -20,7 +22,12 @@ public class VerificationTokenService {
      */
     public VerificationToken saveToken(VerificationToken verificationToken){
         return tokenRepo.save(verificationToken);
-        
-}
+    }
+
+    public int updateTokenConfirmedAt(String token){
+        return tokenRepo.updateTokenConfirmedAtAndToken(token, LocalDateTime.now());
+    }
+
+
     
 }
