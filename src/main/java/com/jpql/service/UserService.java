@@ -3,6 +3,7 @@ package com.jpql.service;
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.VerificationTokenRepo;
 import com.jpql.service.email.EmailService;
+import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.Role;
 import com.jpql.usermodel.User;
 import com.jpql.usermodel.VerificationToken;
@@ -21,7 +22,7 @@ public class UserService implements UserDetailsService{
     private UserRepo userRepo;
 
     @Autowired
-    private VerificationTokenRepo tokenRepo;
+    private VerificationTokenService tokenService;
 
     @Autowired
     private EmailService emailService;
@@ -34,7 +35,8 @@ public class UserService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepo.findByEmail(email).orElseThrow( () ->
-            new UsernameNotFoundException(String.format("User dengan '$s' Tidak Ditemukan", email))
+            new UsernameNotFoundException(
+                String.format("User dengan '$s' Tidak Ditemukan", email))
         );
     }
     
@@ -51,18 +53,15 @@ public class UserService implements UserDetailsService{
         user.setPassword(encodePassword);
 
         VerificationToken verificationToken = new VerificationToken(user);
-        tokenRepo.save(verificationToken);
+        tokenService.saveToken(verificationToken);
 
         emailService.sendEmail(user.getEmail(), "Verification Email", "Mohon Klik  "+
             "link token ini: " + 
             "http://localhost:8080/confirm-account?=token:" + verificationToken.getToken());
-
-
         user.setRole(Role.USER);
         return userRepo.save(user);
-
-        
-        
     }
+
+    
    
 }
