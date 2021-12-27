@@ -16,7 +16,7 @@ public class EmailService {
         mailMessage.setTo(to);
         mailMessage.setSubject(subject);
         mailMessage.setText(content);
-        mailMessage.setFrom("rainhard@gmail.com");
+        mailMessage.setFrom("apps-no-reply@app.com");
         mailSender.send(mailMessage);
     }
     
