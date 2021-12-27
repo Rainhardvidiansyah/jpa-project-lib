@@ -1,7 +1,8 @@
 package com.jpql.service;
 
+import java.time.LocalDateTime;
+
 import com.jpql.Repository.UserRepo;
-import com.jpql.Repository.VerificationTokenRepo;
 import com.jpql.service.email.EmailService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.Role;
@@ -17,7 +18,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserDetailsService{
+
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private static PasswordEncoder passwordEncoder;
     
+
     @Autowired
     private UserRepo userRepo;
 
@@ -26,9 +34,6 @@ public class UserService implements UserDetailsService{
 
     @Autowired
     private EmailService emailService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     
 
@@ -61,6 +66,29 @@ public class UserService implements UserDetailsService{
         user.setRole(Role.USER);
         return userRepo.save(user);
     }
+
+
+
+    /*
+     TODO: CREATE CONFIRMATION TOKEN, CONFIRMED_AT
+     AND CHANGE ENABLE USER TO TRUE
+     if(User.enabled == false){
+         return badcredential;
+     }else{
+         return redirect to welcome_page;
+     }
+     */
+    public void confirmationToken(String token, String email){
+        VerificationToken verificationToken = tokenService.findToken(token);
+        User user = new User();
+        if(verificationToken != null){
+            updateEnableUser(verificationToken.getUser().getEmail());
+            tokenService.updateTokenConfirmedAt(verificationToken.getUser().getEmail());
+        }else{
+            throw new RuntimeException("Token Not Found...");
+        }
+    }
+
 
     
 
