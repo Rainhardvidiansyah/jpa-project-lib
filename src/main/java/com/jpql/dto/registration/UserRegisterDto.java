@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @PasswordValidator(message = "Password Tidak Sama... ")
-@UsernameValidator(message = "Username Tidak Boleh Kosong...")
+@UsernameValidator(message = "Nama Pengguna Tidak Boleh Kosong...")
 public class UserRegisterDto {
 
 
