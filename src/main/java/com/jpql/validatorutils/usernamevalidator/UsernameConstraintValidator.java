@@ -3,13 +3,13 @@ package com.jpql.validatorutils.usernamevalidator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.jpql.dto.registration.RegistrationDto;
+import com.jpql.dto.registration.UserRegisterDto;
 
 public class UsernameConstraintValidator implements ConstraintValidator<UsernameValidator, Object>{
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext context) {
-        RegistrationDto registrationDto = (RegistrationDto) o;
+        UserRegisterDto registrationDto = (UserRegisterDto) o;
         
         return !registrationDto.getNameofuser().isEmpty();
     }
