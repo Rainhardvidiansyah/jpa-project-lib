@@ -11,13 +11,13 @@ import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
-// @PasswordValidator(message = "Password Tidak Sama... ")
-// @UsernameValidator(message = "Username Tidak Boleh Kosong...")
+@PasswordValidator(message = "Password Tidak Sama... ")
+@UsernameValidator(message = "Username Tidak Boleh Kosong...")
 public class UserRegisterDto {
 
 
     private String nameofuser;
-    //@EmailValidator(message = "Email Sudah Terdaftar...")
+    @EmailValidator(message = "Email Sudah Terdaftar...")
     private String email;
 
     private String password;
