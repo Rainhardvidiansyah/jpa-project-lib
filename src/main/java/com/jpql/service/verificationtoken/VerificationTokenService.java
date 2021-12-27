@@ -13,6 +13,7 @@ public class VerificationTokenService {
 
     @Autowired
     private VerificationTokenRepo tokenRepo;
+    
 
 
     /**
@@ -22,6 +23,10 @@ public class VerificationTokenService {
      */
     public VerificationToken saveToken(VerificationToken verificationToken){
         return tokenRepo.save(verificationToken);
+    }
+
+    public VerificationToken findToken(String token){
+        return tokenRepo.findByToken(token);
     }
 
     public int updateTokenConfirmedAt(String token){
