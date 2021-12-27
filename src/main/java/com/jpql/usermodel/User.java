@@ -2,6 +2,7 @@ package com.jpql.usermodel;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,17 +38,20 @@ public class User implements UserDetails{
     @Column(name = "user_id", nullable = false)
     private long id;
 
-    @Column(name = "user_name", length = 150, nullable = false)
+    //@Column(name = "user_name", length = 150, nullable = false)
     private String nameofuser;
 
-    @Column(name = "user_email", length = 150, nullable = false, unique = true)
+    //@Column(name = "user_email", length = 150, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_user", nullable = false)
+    //@Column(name = "password_user", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<VerificationToken> verificationToken;
 
     private boolean locked;
     private boolean isEnabled;
@@ -119,8 +124,14 @@ public class User implements UserDetails{
     public void setAddress(Address address) {
         this.address = address;
     }
+    
+    public Set<VerificationToken> getVerificationToken() {
+        return verificationToken;
+    }
 
-
+    public void setVerificationToken(Set<VerificationToken> verificationToken) {
+        this.verificationToken = verificationToken;
+    }
     
     /* 
     Below is User Details Implementation 
