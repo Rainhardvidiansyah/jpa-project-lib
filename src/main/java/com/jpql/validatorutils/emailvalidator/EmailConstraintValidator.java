@@ -14,7 +14,7 @@ public class EmailConstraintValidator implements ConstraintValidator<EmailValida
     
     @Override
     public boolean isValid(String email, ConstraintValidatorContext arg1) {
-        return false;
+        return !userRepo.findByEmail(email).isPresent();
     }
 
   
