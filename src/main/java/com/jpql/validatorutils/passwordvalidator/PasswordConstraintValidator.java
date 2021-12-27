@@ -3,13 +3,13 @@ package com.jpql.validatorutils.passwordvalidator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.jpql.dto.registration.RegistrationDto;
+import com.jpql.dto.registration.UserRegisterDto;
 
 public class PasswordConstraintValidator implements ConstraintValidator<PasswordValidator, Object>{
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext arg1) {
-        RegistrationDto registrationDto = (RegistrationDto) o;
+        UserRegisterDto registrationDto = (UserRegisterDto) o;
         return registrationDto.getPassword().equals(registrationDto.getMatchPassword());
     }
     
