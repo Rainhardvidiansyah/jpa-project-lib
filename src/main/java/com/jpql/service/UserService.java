@@ -1,6 +1,6 @@
 package com.jpql.service;
 
-import java.time.LocalDateTime;
+
 
 import com.jpql.Repository.UserRepo;
 import com.jpql.service.email.EmailService;
@@ -19,13 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService{
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
-
     @Autowired
-    private static PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     
-
+    
     @Autowired
     private UserRepo userRepo;
 
@@ -54,8 +51,10 @@ public class UserService implements UserDetailsService{
         if(userExist){
             throw new IllegalStateException("User dengan Telah Terdaftar...");
         }
-        String encodePassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodePassword);
+        // String encodePassword = passwordEncoder.encode(user.getPassword());
+        // user.setPassword(encodePassword);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         VerificationToken verificationToken = new VerificationToken(user);
         tokenService.saveToken(verificationToken);
