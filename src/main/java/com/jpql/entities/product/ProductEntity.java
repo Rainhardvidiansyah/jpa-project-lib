@@ -8,14 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "product_tbl")
@@ -35,6 +33,18 @@ public class ProductEntity {
     private LocalDate madeAt;
 
     private LocalDate expiredAt;
+
+    public ProductEntity(String productName, String productDescription, Double price, int stocks, LocalDate madeAt,
+            LocalDate expiredAt) {
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.price = price;
+        this.stocks = stocks;
+        this.madeAt = madeAt;
+        this.expiredAt = expiredAt;
+    }
+
+    
     
     
 }
