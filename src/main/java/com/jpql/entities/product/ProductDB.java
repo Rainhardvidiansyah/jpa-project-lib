@@ -2,8 +2,7 @@ package com.jpql.entities.product;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
-
+import java.util.List;
 
 import com.jpql.Repository.product.ProductRepo;
 
@@ -19,7 +18,7 @@ public class ProductDB implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        productRepo.saveAll(Arrays.asList(
+        productRepo.saveAll(List.of(
             new ProductEntity(1l, "Sambal Matah", "Khas Bali", 20.000, 300,
                 LocalDate.of(2021, Month.OCTOBER, 20), LocalDate.of(2021, Month.NOVEMBER, 12)),
             new ProductEntity(2L, "Sambal Bawang", "Khas Jawa Timur", 35.000, 211,
