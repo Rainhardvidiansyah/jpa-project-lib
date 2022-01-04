@@ -15,8 +15,6 @@ public interface ProductRepo extends JpaRepository<ProductEntity, Long>{
     List<ProductEntity> findNameAndPrice(@Param("productName") String productName, @Param("productDescription") String productDescription);
 
 
-    //List<ProductEntity> findAllProductEntity(ProductEntity productEntity);
-
     @Query("select p from ProductEntity p where p.productName = :productName")
     List <ProductEntity> findByName(@Param("productName") String productName);
 
