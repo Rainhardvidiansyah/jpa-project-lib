@@ -29,8 +29,16 @@ public class VerificationTokenService {
         return tokenRepo.findByToken(token);
     }
 
+    public void deleteToken(Long tokenId){
+        tokenRepo.deleteById(tokenId);
+    }
+
     public int updateTokenConfirmedAt(String token){
         return tokenRepo.updateTokenConfirmedAtAndToken(token, LocalDateTime.now());
+    }
+
+    public VerificationToken getToken(Long id){
+        return tokenRepo.findById(id).get();
     }
 
 
