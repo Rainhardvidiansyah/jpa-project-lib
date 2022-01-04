@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,22 +17,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.jpql.entities.cart.CartEntity;
+import com.jpql.helper.audit.Auditing;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-@AllArgsConstructor
 
 
-public class User implements UserDetails{
+public class User extends Auditing implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,10 +66,24 @@ public class User implements UserDetails{
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
-    
+
+    /**
+    RELATION TO CART_ENTITY
+     */
+    @OneToOne
+    @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
+    private CartEntity cartEntity;
+
 
     public long getId() {
         return id;
+    }
+
+    public User(String nameofuser, String email, 
+                String password) {
+        this.nameofuser = nameofuser;
+        this.email = email;
+        this.password = password;
     }
 
     public void setId(long id) {
