@@ -1,7 +1,5 @@
 package com.jpql.usermodel;
 
-
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
