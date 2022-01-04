@@ -5,7 +5,9 @@ import javax.validation.Valid;
 import com.jpql.dto.errorhandling.ResponseData;
 import com.jpql.dto.registration.UserRegisterDto;
 import com.jpql.service.UserService;
+import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.User;
+import com.jpql.usermodel.VerificationToken;
 import com.jpql.utilities.ErrorUtils;
 
 import org.modelmapper.ModelMapper;
@@ -13,23 +15,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/")
 public class RegistrationController {
 
     @Autowired
     private UserService userService;
 
     @Autowired
+    VerificationTokenService tokenService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/registration")    
-    public ResponseEntity<?> registerUser(@Valid UserRegisterDto userRegisterDto, Errors errors){
+    @PostMapping("registration")    
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegisterDto userRegisterDto, Errors errors){
         ResponseData<UserRegisterDto> responseData = new ResponseData();
         if(errors.hasErrors()){
             responseData.setStatus(false);
@@ -42,6 +50,45 @@ public class RegistrationController {
         responseData.setStatus(true);
         responseData.setPayload(modelMapper.map(user, UserRegisterDto.class));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    /**
+     MY PURPOSE IN HERE:
+     1. FIND TOKEN SO THAT THE RETURN VALUE IS TOKEN EXIST AND ACCEPTED
+     2. USER WITH USERNAME, FOR EXAMPLE, "RAINHARD" CAN LOGIN INTO APP
+     3.
+     */
+    @GetMapping("confirmation/{token}")
+    public String confirmToken(@RequestParam(value = "token", required = false) String token){
+        VerificationToken vToken = tokenService.findToken(token);
+        VerificationToken vtoken = userService.confirmationToken(vToken.getToken());
+        return vToken + " ada";
+    }
+
+
+    /* 
+    INI MASIH PERCOBAAN: BAGAIMANA JIKA DITINJAU DENGAN ID DARI TIAP-TIAP ENTITY
+     */
+    @GetMapping("gettoken")
+    public VerificationToken getToken(Long id){
+        return tokenService.getToken(id);
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @GetMapping("test")
+    public String testing(){
+        return "Haloooo";
     }
 
     
