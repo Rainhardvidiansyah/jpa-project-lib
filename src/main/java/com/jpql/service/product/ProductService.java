@@ -3,9 +3,11 @@ package com.jpql.service.product;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Entity;
 import javax.transaction.Transactional;
 
 import com.jpql.Repository.product.ProductRepo;
+import com.jpql.entities.cart.CartEntity;
 import com.jpql.entities.product.ProductEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,8 @@ public class ProductService {
 
 
     /* 
-    METHOD THAT WILL BE CREATED HERE FUNCTION AS: 
+    METHOD THAT WILL BE CREATED HERE FUNCTION AS:
+    SAVE PRODUCT 
     FIND ALL PRODUCT
     FIND PRODUCT BY ID
     FIND PRODUCT-LIKE
@@ -28,6 +31,10 @@ public class ProductService {
     @Autowired(required = true)
     private ProductRepo productRepo;
 
+
+    public ProductEntity saveProduct(ProductEntity product){
+        return productRepo.save(product);
+    }
 
     public List<ProductEntity> findAllProduct(){
         return productRepo.findAll();
@@ -57,3 +64,24 @@ public class ProductService {
     
     
 }
+
+
+
+
+
+
+/**
+ SET CART INTO PRODUCT
+    public void setCartIdToProduct(Long productId, CartEntity cartEntity){
+        ProductEntity productEntity = findProductById(productId);
+        if(productEntity == null){
+            ProductEntity product = new ProductEntity();
+            getProductName(product.getProductName());
+        }
+        CartEntity cart = new CartEntity();
+        productEntity.setCartEntity(cart);
+
+        saveProduct(productEntity);
+    }
+ */
+    
