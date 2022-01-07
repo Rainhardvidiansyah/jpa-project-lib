@@ -37,7 +37,7 @@ public class User extends Auditing implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
-    private long id;
+    private long userId;
 
     @Column(name = "user_name", length = 150, nullable = false)
     private String nameofuser;
@@ -63,8 +63,8 @@ public class User extends Auditing implements UserDetails{
     CATATAN TAMBAHAN: (referencedColumnName = "addressId")
     ITU HARUS BEGITU, KALAU PAKAI "ID" SAJA, NANTI AKAN ERROR
     */
-    @OneToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
+    @OneToOne(mappedBy = "user")
+    //@JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
 
     /**
@@ -75,10 +75,6 @@ public class User extends Auditing implements UserDetails{
     private CartEntity cartEntity;
 
 
-    public long getId() {
-        return id;
-    }
-
     public User(String nameofuser, String email, 
                 String password) {
         this.nameofuser = nameofuser;
@@ -86,8 +82,13 @@ public class User extends Auditing implements UserDetails{
         this.password = password;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getId() {
+        return userId;
+    }
+
+
+    public void setId(long userId) {
+        this.userId = userId;
     }
 
     public String getNameofuser() {
