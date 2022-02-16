@@ -1,7 +1,9 @@
 package com.jpql.controller.product;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.jpql.dto.product.ProductResponse;
 import com.jpql.entities.product.ProductEntity;
@@ -11,6 +13,8 @@ import com.jpql.service.product.ProductService;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +37,7 @@ public class ProductController {
     @Autowired
     private ModelMapper modelMapper;
 
-
-   
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     /**
      THESE METHODS SHOULD SHOW:
@@ -43,6 +46,7 @@ public class ProductController {
      3. GET PRODUCT BY NAME -> ok
      4. GET PRODUCT BY DESCRIPTION -> ok
      5. GET PRODUCT BY DESCRIPTION/PATHVARIABLE -> ok
+     6. Stream to Track Price Order
      **/
 
 
@@ -102,6 +106,22 @@ public class ProductController {
        }
        return new ResponseEntity<>(responses, HttpStatus.OK);
    }
+   
+   @GetMapping("/sortedproduct")
+   public List<Double> searchDataPrice(ProductEntity productEntity){
+       return productService.orderedPrice(productEntity.getPrice());
+   }
+      
+
+
+
+
+
+
+   }
+
+   
+
 
      
-}
+

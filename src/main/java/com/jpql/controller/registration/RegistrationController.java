@@ -3,7 +3,7 @@ package com.jpql.controller.registration;
 import javax.validation.Valid;
 
 import com.jpql.dto.errorhandling.ResponseData;
-import com.jpql.dto.registration.UserRegisterDto;
+import com.jpql.dto.registration.RegistrationRequest;
 import com.jpql.service.UserService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.User;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class RegistrationController {
 
     @Autowired
@@ -36,20 +36,21 @@ public class RegistrationController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("registration")    
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegisterDto userRegisterDto, Errors errors){
-        ResponseData<UserRegisterDto> responseData = new ResponseData();
+    @PostMapping("/registration")    
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest request, Errors errors){
+        ResponseData<RegistrationRequest> responseData = new ResponseData();
         if(errors.hasErrors()){
             responseData.setStatus(false);
             responseData.setMessages(ErrorUtils.err(errors));
             responseData.setPayload(null);
             return ResponseEntity.badRequest().body(responseData);
         }
-        User user = modelMapper.map(userRegisterDto, User.class);
+        User user = modelMapper.map(request, User.class);
         userService.registration(user);
         responseData.setStatus(true);
-        responseData.setPayload(modelMapper.map(user, UserRegisterDto.class));
-        return new ResponseEntity<>(HttpStatus.OK);
+        responseData.setPayload(modelMapper.map(user, RegistrationRequest.class));
+        //return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().body("Registrasi Diterima");
     }
 
 
@@ -59,7 +60,7 @@ public class RegistrationController {
      2. USER WITH USERNAME, FOR EXAMPLE, "RAINHARD" CAN LOGIN INTO APP
      3.
      */
-    @GetMapping("confirmation/{token}")
+    @GetMapping("/confirmation/{token}")
     public String confirmToken(@RequestParam(value = "token", required = false) String token){
         VerificationToken vToken = tokenService.findToken(token);
         VerificationToken vtoken = userService.confirmationToken(vToken.getToken());
@@ -70,23 +71,13 @@ public class RegistrationController {
     /* 
     INI MASIH PERCOBAAN: BAGAIMANA JIKA DITINJAU DENGAN ID DARI TIAP-TIAP ENTITY
      */
-    @GetMapping("gettoken")
+    @GetMapping("/gettoken")
     public VerificationToken getToken(Long id){
         return tokenService.getToken(id);
         
     }
 
-
-
-
-
-
-
-
-
-
-
-    @GetMapping("test")
+    @GetMapping("/test")
     public String testing(){
         return "Haloooo";
     }

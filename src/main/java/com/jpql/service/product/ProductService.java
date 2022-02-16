@@ -1,7 +1,10 @@
 package com.jpql.service.product;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.transaction.Transactional;
@@ -10,12 +13,17 @@ import com.jpql.Repository.product.ProductRepo;
 import com.jpql.entities.cart.CartEntity;
 import com.jpql.entities.product.ProductEntity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
 public class ProductService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
+
 
 
     /* 
@@ -62,8 +70,34 @@ public class ProductService {
         return productRepo.findByProductDescription(productDescription);
     }
     
+
+    //THIS METHOD IS NOT USED YET
+    public List<Double> orderedPrice(Double price){
+        List<Double> prices = new ArrayList<Double>();
+        ProductEntity test =  productRepo.findByPrice(price);
+        for(int i =0; i < prices.size(); i++){
+            Double test2 = test.getPrice();
+            prices.add(test.getPrice());
+            LOGGER.debug("INI LIHAT HASILNYA: ", prices);
+            LOGGER.info("TESTING");
+        }
+        
+        return prices;
+        
+        }
+        
+        
+        public void printLogger(Double price){
+            LOGGER.info("test",orderedPrice(price));
+        }
+        
+        
+        
+        
+
+    }
     
-}
+
 
 
 

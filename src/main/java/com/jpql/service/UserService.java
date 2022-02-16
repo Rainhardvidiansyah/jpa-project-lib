@@ -1,12 +1,17 @@
 package com.jpql.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.jpql.Repository.UserRepo;
+import com.jpql.Repository.role.RoleRepo;
 import com.jpql.service.email.EmailService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
+import com.jpql.usermodel.ERole;
 import com.jpql.usermodel.Role;
 import com.jpql.usermodel.User;
+import com.jpql.usermodel.UserDetailsImpl;
 import com.jpql.usermodel.VerificationToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +35,18 @@ public class UserService implements UserDetailsService{
 
     @Autowired
     private EmailService emailService;
+    
+    @Autowired
+    private RoleRepo roleRepo;
 
+    
     
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepo.findByEmail(email).orElseThrow( () ->
-            new UsernameNotFoundException(
-                String.format("User dengan '$s' Tidak Ditemukan", email))
-        );
+        User user = userRepo.findByEmail(email).orElseThrow(() -> 
+        new UsernameNotFoundException("Email tidak ditemukan ... "));
+        return UserDetailsImpl.build(user);
     }
     
      String subject = "VERIFIKASI EMAIL";
@@ -54,7 +62,7 @@ public class UserService implements UserDetailsService{
     It is also possible to use setText when sending HTML-mail:
     String html = "Test\n" + text + "\n<a href='http://test.com'>Test.com</a>";
     messageBodyPart.setText(html, "UTF-8", "html");
-     */
+    //  */
     public User registration(User user){
         boolean userExist = userRepo.findByEmail(user.getEmail()).isPresent();
         if(userExist){
@@ -67,7 +75,13 @@ public class UserService implements UserDetailsService{
         Date date = new Date();
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
-        user.setRole(Role.USER);
+
+        // List<Role> roles = new ArrayList<>();
+        // Role role = new Role();
+        // role.setName(role.getName().USER);
+        // //roleRepo.findByName(ERole.USER).get();
+        // roles.add(role);
+        // user.setRole(roles);
         return userRepo.save(user);
     }
 

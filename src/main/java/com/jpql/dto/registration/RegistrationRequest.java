@@ -9,19 +9,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
+
+
 @PasswordValidator(message = "Password Tidak Sama... ")
 @UsernameValidator(message = "Nama Pengguna Tidak Boleh Kosong...")
-public class UserRegisterDto {
+public class RegistrationRequest {
 
 
-    private String nameofuser;
+    private String fullName;
+
+
     @EmailValidator(message = "Email Sudah Terdaftar...")
     private String email;
 
     private String password;
 
     private String matchPassword;
+
     
 }

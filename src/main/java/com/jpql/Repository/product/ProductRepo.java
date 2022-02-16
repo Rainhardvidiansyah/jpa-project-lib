@@ -25,6 +25,10 @@ public interface ProductRepo extends JpaRepository<ProductEntity, Long>{
     @Query("select p from ProductEntity p where p.productDescription like %:productDescription%")
     List<ProductEntity> findByProductDescription(String productDescription);
 
+    ProductEntity findByPrice(Double price);
+
+    
+
 
 
     
