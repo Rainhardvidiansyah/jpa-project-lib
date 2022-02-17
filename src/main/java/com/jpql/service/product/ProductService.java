@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.transaction.Transactional;
 
 import com.jpql.Repository.product.ProductRepo;
-import com.jpql.entities.cart.CartEntity;
+import com.jpql.entities.cart.ShoppingCart;
 import com.jpql.entities.product.ProductEntity;
 
 import org.slf4j.Logger;

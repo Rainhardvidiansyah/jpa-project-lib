@@ -1,10 +1,10 @@
 package com.jpql.Repository.cart;
 
-import com.jpql.entities.cart.CartEntity;
+import com.jpql.entities.cart.ShoppingCart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CartRepo extends JpaRepository<CartEntity, Long>{
+public interface ShoppingCartRepo extends JpaRepository<ShoppingCart, Long>{
 
     /*
     FUNCTIONALITY TO ADD PRODUCT IN CART IS HERE

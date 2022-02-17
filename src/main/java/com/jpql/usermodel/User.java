@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.jpql.entities.cart.CartEntity;
+import com.jpql.entities.cart.ShoppingCart;
 import com.jpql.helper.audit.Auditing;
 
 import lombok.AllArgsConstructor;
@@ -68,7 +68,9 @@ public class User extends Auditing{
     private boolean locked;
     private boolean isEnabled;
 
-    
+    public User(List<Role> role){
+        this.role = role;
+    }
 
 
     /* RELATION TO ONE-TO-ONE
@@ -85,7 +87,7 @@ public class User extends Auditing{
      */
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private CartEntity cartEntity;
+    private ShoppingCart cartEntity;
 
 
 

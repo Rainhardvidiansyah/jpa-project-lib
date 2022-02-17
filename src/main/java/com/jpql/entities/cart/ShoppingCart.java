@@ -31,7 +31,7 @@ import lombok.Setter;
 
 @SQLDelete(sql = "update CartEntity set ordered = true where cartId = ?")
 @Where(clause = "ordered = true, deleted = true")
-public class CartEntity extends Auditing{
+public class ShoppingCart extends Auditing{
 
     /**
      THIS CLASS CONTAINS:

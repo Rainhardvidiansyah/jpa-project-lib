@@ -1,7 +1,7 @@
 package com.jpql.service.cart;
 
 
-import com.jpql.Repository.cart.CartRepo;
+import com.jpql.Repository.cart.ShoppingCartRepo;
 import com.jpql.service.product.ProductService;
 
 
@@ -18,7 +18,7 @@ public class CartService {
      */
 
     @Autowired
-    private CartRepo cartRepo;
+    private ShoppingCartRepo cartRepo;
 
     @Autowired
     private ProductService productService;

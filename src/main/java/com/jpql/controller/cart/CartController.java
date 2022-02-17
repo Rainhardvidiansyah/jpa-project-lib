@@ -3,9 +3,9 @@ package com.jpql.controller.cart;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jpql.Repository.cart.CartRepo;
+import com.jpql.Repository.cart.ShoppingCartRepo;
 import com.jpql.dto.cart.CartDto;
-import com.jpql.entities.cart.CartEntity;
+import com.jpql.entities.cart.ShoppingCart;
 import com.jpql.entities.product.ProductEntity;
 import com.jpql.service.cart.CartService;
 import com.jpql.service.product.ProductService;

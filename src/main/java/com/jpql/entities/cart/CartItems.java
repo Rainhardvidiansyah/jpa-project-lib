@@ -30,7 +30,7 @@ public class CartItems{
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private CartEntity cartEntity;
+    private ShoppingCart cartEntity;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")

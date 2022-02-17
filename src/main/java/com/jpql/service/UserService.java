@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.transaction.Transactional;
 
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.role.RoleRepo;
+import com.jpql.dto.RequestRole;
 import com.jpql.service.email.EmailService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.ERole;
@@ -79,13 +81,11 @@ public class UserService implements UserDetailsService{
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
 
-        
         List<Role> roles = new ArrayList<>();
         Role role = new Role();
         role.setName(role.getName().USER);
-        roles.add(role);
-        
-        roleRepo.save(role);
+        roles.add(role);        
+        // roleRepo.save(role);
         user.setRole(roles);
         return userRepo.save(user);
     }
