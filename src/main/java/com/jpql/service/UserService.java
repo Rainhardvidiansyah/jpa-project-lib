@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.role.RoleRepo;
 import com.jpql.service.email.EmailService;
@@ -43,6 +45,7 @@ public class UserService implements UserDetailsService{
     
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(email).orElseThrow(() -> 
         new UsernameNotFoundException("Email tidak ditemukan ... "));
@@ -62,7 +65,7 @@ public class UserService implements UserDetailsService{
     It is also possible to use setText when sending HTML-mail:
     String html = "Test\n" + text + "\n<a href='http://test.com'>Test.com</a>";
     messageBodyPart.setText(html, "UTF-8", "html");
-    //  */
+    */
     public User registration(User user){
         boolean userExist = userRepo.findByEmail(user.getEmail()).isPresent();
         if(userExist){
@@ -76,12 +79,13 @@ public class UserService implements UserDetailsService{
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
 
-        // List<Role> roles = new ArrayList<>();
-        // Role role = new Role();
+        List<Role> roles = new ArrayList<>();
+        //Role role =  roleRepo.findByName(ERole.USER).get();
         // role.setName(role.getName().USER);
-        // //roleRepo.findByName(ERole.USER).get();
-        // roles.add(role);
-        // user.setRole(roles);
+        Role role = new Role();
+        role.setName(role.getName().USER);
+        roles.add(role);
+        user.setRole(roles);
         return userRepo.save(user);
     }
 

@@ -53,10 +53,10 @@ public class UserLogin {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
 		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();		
-		// List<String> roles = user.getAuthorities().stream()
-		// 		.map(item -> item.getAuthority())
-		// 		.collect(Collectors.toList());
-		return ResponseEntity.ok(new JwtResponse(jwt, "Bearer", user.getUserId(), user.getFullName(), user.getEmail()));
+		List<String> roles = user.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+		return ResponseEntity.ok(new JwtResponse(jwt, "Bearer", user.getUserId(), user.getFullName(), user.getEmail(), roles));
 	}
 
     
