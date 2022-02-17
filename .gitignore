@@ -36,3 +36,4 @@ build/
 application.properties
 
 RoleService.java
+src/main/resources/application.properties
