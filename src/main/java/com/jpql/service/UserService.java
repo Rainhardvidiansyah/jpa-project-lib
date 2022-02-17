@@ -79,12 +79,13 @@ public class UserService implements UserDetailsService{
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
 
+        
         List<Role> roles = new ArrayList<>();
-        //Role role =  roleRepo.findByName(ERole.USER).get();
-        // role.setName(role.getName().USER);
         Role role = new Role();
         role.setName(role.getName().USER);
         roles.add(role);
+        
+        roleRepo.save(role);
         user.setRole(roles);
         return userRepo.save(user);
     }
