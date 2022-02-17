@@ -1,16 +1,12 @@
 package com.jpql.usermodel;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -88,6 +84,14 @@ public class User extends Auditing{
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
     private ShoppingCart cartEntity;
+
+    public User(String fullName, String email, String password) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+    }
+
+    
 
 
 

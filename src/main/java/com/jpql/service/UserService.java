@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.role.RoleRepo;
-import com.jpql.dto.RequestRole;
+import com.jpql.dto.registration.RegistrationRequest;
 import com.jpql.service.email.EmailService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
 import com.jpql.usermodel.ERole;
@@ -80,12 +80,20 @@ public class UserService implements UserDetailsService{
         Date date = new Date();
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
+        RegistrationRequest request = new RegistrationRequest();
+        User user2 = new User(request.getFullName(), request.getEmail(), request.getPassword());
 
+        List<String> strRole = request.getRoles();
         List<Role> roles = new ArrayList<>();
-        Role role = new Role();
-        role.setName(role.getName().USER);
-        roles.add(role);        
-        // roleRepo.save(role);
+        if (strRole == null) {
+            Role userRole = roleRepo.findByName(ERole.USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+          } else{
+              Role roleAdm = roleRepo.findByName(ERole.USER).get();
+                // .orElseThrow(() - > new RuntimeException("message"));
+                roles.add(roleAdm);
+          }
         user.setRole(roles);
         return userRepo.save(user);
     }

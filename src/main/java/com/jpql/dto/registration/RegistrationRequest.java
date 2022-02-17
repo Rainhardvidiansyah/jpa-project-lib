@@ -1,5 +1,8 @@
 package com.jpql.dto.registration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jpql.validatorutils.emailvalidator.EmailValidator;
 import com.jpql.validatorutils.passwordvalidator.PasswordValidator;
 import com.jpql.validatorutils.usernamevalidator.UsernameValidator;
@@ -28,6 +31,8 @@ public class RegistrationRequest {
     private String password;
 
     private String matchPassword;
+
+    private  List<String> roles = new ArrayList<>();
 
     
 }

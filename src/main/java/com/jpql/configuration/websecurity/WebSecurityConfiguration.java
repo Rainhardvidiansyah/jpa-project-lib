@@ -3,7 +3,7 @@ package com.jpql.configuration.websecurity;
 import com.jpql.configuration.jwt.AuthEntryPointJwt;
 import com.jpql.configuration.jwt.AuthTokenFilter;
 import com.jpql.service.UserService;
-
+import com.jpql.usermodel.ERole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
