@@ -79,11 +79,11 @@ public class User extends Auditing{
     private Address address;
 
     /**
-    RELATION TO CART_ENTITY
+    RELATION TO SHOPPING CART
      */
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private ShoppingCart cartEntity;
+    private ShoppingCart shoppingCart;
 
     public User(String fullName, String email, String password) {
         this.fullName = fullName;
