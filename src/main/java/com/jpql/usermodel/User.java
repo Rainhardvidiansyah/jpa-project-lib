@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.jpql.entities.cart.ShoppingCart;
+import com.jpql.entities.favourite.UserWishlist;
 import com.jpql.helper.audit.Auditing;
 
 import lombok.AllArgsConstructor;
@@ -54,7 +55,7 @@ public class User extends Auditing{
     private Set<VerificationToken> verificationToken;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_user_tbl",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -64,10 +65,7 @@ public class User extends Auditing{
     private boolean locked;
     private boolean isEnabled;
 
-    public User(List<Role> role){
-        this.role = role;
-    }
-
+   
 
     /* RELATION TO ONE-TO-ONE
     TO USER ADRESS 
@@ -77,6 +75,15 @@ public class User extends Auditing{
     @OneToOne(mappedBy = "user")
     //@JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
+
+    @OneToOne(mappedBy = "user")
+    private UserWishlist wishlist;
+
+
+
+
+
+
 
     /**
     RELATION TO SHOPPING CART
@@ -91,7 +98,14 @@ public class User extends Auditing{
         this.password = password;
     }
 
-    
+    public User(String fullName, String email, String password, List<Role> role) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+
 
 
 

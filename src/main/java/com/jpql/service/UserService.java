@@ -18,6 +18,8 @@ import com.jpql.usermodel.User;
 import com.jpql.usermodel.UserDetailsImpl;
 import com.jpql.usermodel.VerificationToken;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserDetailsService{
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
      private PasswordEncoder passwordEncoder;
@@ -69,6 +73,7 @@ public class UserService implements UserDetailsService{
     messageBodyPart.setText(html, "UTF-8", "html");
     */
     public User registration(User user){
+        
         boolean userExist = userRepo.findByEmail(user.getEmail()).isPresent();
         if(userExist){
             throw new IllegalStateException("Email dengan Telah Terdaftar...");
@@ -80,20 +85,15 @@ public class UserService implements UserDetailsService{
         Date date = new Date();
         emailService.sendEmail(user.getEmail(), this.subject,
         this.hyperLinkToSend + verificationToken.getToken(), date);
-        RegistrationRequest request = new RegistrationRequest();
-        User user2 = new User(request.getFullName(), request.getEmail(), request.getPassword());
 
-        List<String> strRole = request.getRoles();
+        RegistrationRequest request = new RegistrationRequest();
+        List<Role> userRole = user.getRole();
         List<Role> roles = new ArrayList<>();
-        if (strRole == null) {
-            Role userRole = roleRepo.findByName(ERole.USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-          } else{
-              Role roleAdm = roleRepo.findByName(ERole.USER).get();
-                // .orElseThrow(() - > new RuntimeException("message"));
-                roles.add(roleAdm);
-          }
+        if(userRole == null){
+            Role role = roleRepo.findByName(ERole.USER).orElseThrow(() -> new RuntimeException("message"));
+            roles.add(role);
+        }
+    
         user.setRole(roles);
         return userRepo.save(user);
     }
@@ -147,3 +147,38 @@ public class UserService implements UserDetailsService{
     //     }else{
     //         System.out.println("ada yang salah");
     //     }
+
+    
+        
+        // List<String> strRole = request.getRoles();
+        // List<Role> roles = new ArrayList<>();
+    
+        // if(strRole == null){
+        //     Role userRole = roleRepo.findByName(ERole.USER)
+        //     .orElseThrow(() -> new RuntimeException("message"));
+        //     logger.info("ADDED {}", userRole);
+
+        //     roles.add(userRole);
+        // }else{
+        //     strRole.forEach(role -> {
+        //         switch (role){
+        //             case "ADMIN":
+        //             Role adminRole = roleRepo.findByName(ERole.ADMIN)
+        //             .orElseThrow(() -> new RuntimeException("message"));
+        //             roles.add(adminRole);
+        //             break;
+                    
+        //             case "DEV":
+        //             Role devRole = roleRepo.findByName(ERole.DEV)
+        //             .orElseThrow(() -> new RuntimeException("message"));
+        //             roles.add(devRole);
+        //             break;
+
+        //             default:
+        //             Role useRole = roleRepo.findByName(ERole.USER)
+        //             .orElseThrow(() -> new RuntimeException("message"));
+        //             roles.add(useRole);
+
+        //         }
+        //     });
+        // }

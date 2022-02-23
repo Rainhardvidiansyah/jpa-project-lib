@@ -12,6 +12,8 @@ import com.jpql.dto.jwt.JwtResponse;
 import com.jpql.usermodel.User;
 import com.jpql.usermodel.UserDetailsImpl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 
 public class UserLogin {
+
+	private static final Logger log = LoggerFactory.getLogger(UserLogin.class);
     
     @Autowired
 	AuthenticationManager authenticationManager;
@@ -51,13 +55,19 @@ public class UserLogin {
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
+		log.info("User just logged in: {}", loginRequest.getEmail());
 		
 		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = user.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		return ResponseEntity.ok(new JwtResponse(jwt, "Bearer", user.getUserId(), user.getFullName(), user.getEmail(), roles));
+				log.info("Role for User: {}", roles);
+		return ResponseEntity.ok(new JwtResponse(jwt, "Bearer", user.getUserId(), 
+		user.getFullName(), user.getEmail(), roles));
+		
+		
 	}
+	
 
     
 }

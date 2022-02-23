@@ -3,7 +3,7 @@ package com.jpql.configuration.jwt;
 import java.time.LocalDate;
 import java.util.Date;
 
-import com.jpql.usermodel.User;
+
 import com.jpql.usermodel.UserDetailsImpl;
 
 import org.slf4j.Logger;

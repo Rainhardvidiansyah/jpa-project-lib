@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table
+@Table(name = "Shopping_cart")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
@@ -48,10 +48,10 @@ public class ShoppingCart extends Auditing{
 
     private boolean ordered = Boolean.FALSE;
 
-    @OneToOne(mappedBy = "cartEntity")
+    @OneToOne(mappedBy = "shoppingCart")
     private User user;
 
-    @OneToMany(mappedBy = "cartEntity")
+    @OneToMany(mappedBy = "shoppingCart")
     private Set<CartItems> cartItems;
 
 

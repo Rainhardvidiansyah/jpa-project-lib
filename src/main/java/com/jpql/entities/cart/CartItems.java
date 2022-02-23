@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.jpql.entities.product.ProductEntity;
 //import com.jpql.helper.audit.Auditing;
+import com.jpql.helper.audit.Auditing;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +19,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "cart_items")
 @Getter @Setter
-public class CartItems{
-//extends Auditing{
+public class CartItems extends Auditing{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,7 @@ public class CartItems{
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private ShoppingCart cartEntity;
+    private ShoppingCart shoppingCart;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")

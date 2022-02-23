@@ -1,16 +1,25 @@
 package com.jpql.controller.registration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
+import com.jpql.Repository.role.RoleRepo;
 import com.jpql.dto.errorhandling.ResponseData;
 import com.jpql.dto.registration.RegistrationRequest;
 import com.jpql.service.UserService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
+import com.jpql.usermodel.ERole;
+import com.jpql.usermodel.Role;
 import com.jpql.usermodel.User;
 import com.jpql.usermodel.VerificationToken;
 import com.jpql.utilities.ErrorUtils;
 
+
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +35,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 public class RegistrationController {
+
+    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+
+
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Autowired
     private UserService userService;
@@ -45,7 +60,9 @@ public class RegistrationController {
             responseData.setPayload(null);
             return ResponseEntity.badRequest().body(responseData);
         }
+        
         User user = modelMapper.map(request, User.class);
+        request = modelMapper.map(user, RegistrationRequest.class);
         userService.registration(user);
         responseData.setStatus(true);
         responseData.setPayload(modelMapper.map(user, RegistrationRequest.class));
@@ -55,7 +72,7 @@ public class RegistrationController {
 
 
     /**
-     MY PURPOSE IN HERE:
+     MY PURPOSE HERE:
      1. FIND TOKEN SO THAT THE RETURN VALUE IS TOKEN EXIST AND ACCEPTED
      2. USER WITH USERNAME, FOR EXAMPLE, "RAINHARD" CAN LOGIN INTO APP
      3.
