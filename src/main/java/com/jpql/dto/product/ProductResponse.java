@@ -21,7 +21,7 @@ public class ProductResponse {
 
     private Double price;
 
-    private int stocks;
+    //private int stocks;
 
     private LocalDate madeAt;
 
