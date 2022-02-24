@@ -38,10 +38,7 @@ public class ProductDB implements CommandLineRunner{
             new ProductEntity("Sambal DKI", "Khas JAKARTA", 60.000, 780,
                 LocalDate.of(2022, Month.MARCH, 5), LocalDate.of(2022, Month.MAY, 31)) 
         ));
-
-
-
-        LOGGER.info("DATA RECORDED");
+        LOGGER.info("DATA PRODUCT RECORDED");
         
     }
     
