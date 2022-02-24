@@ -9,7 +9,6 @@ import com.jpql.Repository.UserRepo;
 import com.jpql.configuration.jwt.JwtUtils;
 import com.jpql.dto.LoginDto;
 import com.jpql.dto.jwt.JwtResponse;
-import com.jpql.usermodel.User;
 import com.jpql.usermodel.UserDetailsImpl;
 
 import org.slf4j.Logger;
@@ -37,12 +36,6 @@ public class UserLogin {
 
 	@Autowired
 	UserRepo userRepo;
-
-	// @Autowired
-	// RoleRepository roleRepository;
-
-	// @Autowired
-	// PasswordEncoder encoder;
 
 	@Autowired
 	JwtUtils jwtUtils;
