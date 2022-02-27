@@ -1,5 +1,6 @@
 package com.jpql.entities.product;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,15 +8,20 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jpql.entities.cart.CartItems;
+import com.jpql.helper.audit.Auditing;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +30,14 @@ import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "product_tbl")
-public class ProductEntity {
+public class ProductEntity extends Auditing implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
@@ -49,9 +57,9 @@ public class ProductEntity {
 
     private LocalDate expiredAt;
 
-    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<CartItems> cartItems;
+//    @ManyToOne
+//    @JoinColumn(name = "cart_items_id") //TAMBAHIN REFERENCECOLUMNNAME
+//    private CartItems cartItems;
 
     public Level showLevel(){
         for(Level level : Level.values()){
@@ -59,8 +67,6 @@ public class ProductEntity {
         }
         return level;
     }
-
-
 
     public ProductEntity(String productName, String productDescription, 
                         Double price, int stocks, LocalDate madeAt, 

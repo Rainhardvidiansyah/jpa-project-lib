@@ -1,16 +1,12 @@
 package com.jpql.service.product;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
 import javax.transaction.Transactional;
-
 import com.jpql.Repository.product.ProductRepo;
-import com.jpql.entities.cart.ShoppingCart;
+
 import com.jpql.entities.product.ProductEntity;
 
 import org.slf4j.Logger;

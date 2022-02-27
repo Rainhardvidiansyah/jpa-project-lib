@@ -1,17 +1,25 @@
 package com.jpql.entities.cart;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 import com.jpql.entities.product.ProductEntity;
 //import com.jpql.helper.audit.Auditing;
 import com.jpql.helper.audit.Auditing;
+import com.jpql.usermodel.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "cart_items")
 @Getter @Setter
+
 public class CartItems extends Auditing{
 
 
@@ -27,16 +36,19 @@ public class CartItems extends Auditing{
     @Column(name = "cartItems_id")
     private Long cartItemsId;
 
-    private int Quantity;
+    private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private ShoppingCart shoppingCart;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
     private ProductEntity productEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    
     
 }
 

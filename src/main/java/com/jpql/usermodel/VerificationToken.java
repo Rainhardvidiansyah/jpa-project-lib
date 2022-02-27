@@ -35,15 +35,15 @@ public class VerificationToken {
 
     private LocalDateTime expiresAt;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    // @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    // @JoinColumn(name = "user_id")
+    // private User user;
 
-    public VerificationToken(User user) {
-        this.user = user;
-        createdAt = LocalDateTime.now();
-        token = UUID.randomUUID().toString();
-    }
+    // public VerificationToken(User user) {
+    //     this.user = user;
+    //     createdAt = LocalDateTime.now();
+    //     token = UUID.randomUUID().toString();
+    // }
 
 
 

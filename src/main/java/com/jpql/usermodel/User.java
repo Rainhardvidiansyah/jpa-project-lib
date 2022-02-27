@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.jpql.entities.cart.ShoppingCart;
+
 import com.jpql.entities.favourite.UserWishlist;
 import com.jpql.helper.audit.Auditing;
 
@@ -51,8 +51,8 @@ public class User extends Auditing{
     @Column(name = "password_user", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private Set<VerificationToken> verificationToken;
+    // @OneToMany(mappedBy = "user")
+    // private Set<VerificationToken> verificationToken;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -79,18 +79,6 @@ public class User extends Auditing{
     @OneToOne(mappedBy = "user")
     private UserWishlist wishlist;
 
-
-
-
-
-
-
-    /**
-    RELATION TO SHOPPING CART
-     */
-    @OneToOne
-    @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
-    private ShoppingCart shoppingCart;
 
     public User(String fullName, String email, String password) {
         this.fullName = fullName;

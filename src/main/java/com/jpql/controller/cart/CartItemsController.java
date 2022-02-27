@@ -1,5 +1,15 @@
 package com.jpql.controller.cart;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.servlet.ServletRequest;
+
+import com.jpql.Repository.cartitem.CartItemsRepo;
+import com.jpql.dto.cart.CartDto;
 import com.jpql.entities.cart.CartItems;
 import com.jpql.entities.product.ProductEntity;
 import com.jpql.service.cart.CartItemsService;
@@ -10,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,25 +31,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cartitem")
 public class CartItemsController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CartItemsController.class);
+    private static final Logger log = LoggerFactory.getLogger(CartItemsController.class);
 
     @Autowired
-    private CartItemsService itemsService;
+    private CartItemsService cartItemsService;
 
     @Autowired
     private ProductService productService;
-
-    @PostMapping("/add/{productId}")
-    public ResponseEntity<?> add(@RequestBody CartItems cartItems, @PathVariable("productId") Long productId){
-        ProductEntity product = productService.findProductById(productId);
-        if(product == null){
-            LOGGER.error("Product Does Not Exist", product);
-            return new ResponseEntity<>(product, HttpStatus.BAD_REQUEST);
-            
-        }
-        LOGGER.info(product + "Added", product);
-        return new ResponseEntity<>(itemsService.addProduct(cartItems, productId), HttpStatus.OK);
     
+    @Autowired
+    private ServletRequest servletRequest;
+
+    @PostMapping("/addingproduct")
+    public ResponseEntity<?> addProductToCart(@RequestBody CartDto cart){
+        cartItemsService.addToCart(cart);
+        return ResponseEntity.ok().body("Berhasil");
     }
     
 }

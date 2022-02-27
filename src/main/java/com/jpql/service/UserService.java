@@ -80,20 +80,17 @@ public class UserService implements UserDetailsService{
         }
         String encode = passwordEncoder.encode(user.getPassword());
         user.setPassword(encode);
-        VerificationToken verificationToken = new VerificationToken(user);
-        tokenService.saveToken(verificationToken);
+        //VerificationToken verificationToken = new VerificationToken(user);
+        //tokenService.saveToken(verificationToken);
         Date date = new Date();
-        emailService.sendEmail(user.getEmail(), this.subject,
-        this.hyperLinkToSend + verificationToken.getToken(), date);
-
-        RegistrationRequest request = new RegistrationRequest();
+        // emailService.sendEmail(user.getEmail(), this.subject,
+        // this.hyperLinkToSend + verificationToken.getToken(), date);
         List<Role> userRole = user.getRole();
         List<Role> roles = new ArrayList<>();
         if(userRole == null){
             Role role = roleRepo.findByName(ERole.USER).orElseThrow(() -> new RuntimeException("message"));
             roles.add(role);
         }
-    
         user.setRole(roles);
         return userRepo.save(user);
     }
@@ -149,36 +146,3 @@ public class UserService implements UserDetailsService{
     //     }
 
     
-        
-        // List<String> strRole = request.getRoles();
-        // List<Role> roles = new ArrayList<>();
-    
-        // if(strRole == null){
-        //     Role userRole = roleRepo.findByName(ERole.USER)
-        //     .orElseThrow(() -> new RuntimeException("message"));
-        //     logger.info("ADDED {}", userRole);
-
-        //     roles.add(userRole);
-        // }else{
-        //     strRole.forEach(role -> {
-        //         switch (role){
-        //             case "ADMIN":
-        //             Role adminRole = roleRepo.findByName(ERole.ADMIN)
-        //             .orElseThrow(() -> new RuntimeException("message"));
-        //             roles.add(adminRole);
-        //             break;
-                    
-        //             case "DEV":
-        //             Role devRole = roleRepo.findByName(ERole.DEV)
-        //             .orElseThrow(() -> new RuntimeException("message"));
-        //             roles.add(devRole);
-        //             break;
-
-        //             default:
-        //             Role useRole = roleRepo.findByName(ERole.USER)
-        //             .orElseThrow(() -> new RuntimeException("message"));
-        //             roles.add(useRole);
-
-        //         }
-        //     });
-        // }

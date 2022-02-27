@@ -48,11 +48,11 @@ public class ShoppingCart extends Auditing{
 
     private boolean ordered = Boolean.FALSE;
 
-    @OneToOne(mappedBy = "shoppingCart")
-    private User user;
+    // @OneToOne(mappedBy = "shoppingCart")
+    // private User user;
 
-    @OneToMany(mappedBy = "shoppingCart")
-    private Set<CartItems> cartItems;
+    // @OneToMany(mappedBy = "shoppingCart")
+    // private Set<CartItems> cartItems;
 
 
     
