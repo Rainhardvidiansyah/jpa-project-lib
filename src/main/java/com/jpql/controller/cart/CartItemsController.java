@@ -1,19 +1,10 @@
 package com.jpql.controller.cart;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.jpql.Repository.UserRepo;
-import com.jpql.Repository.cartitem.CartItemsRepo;
 import com.jpql.dto.cart.CartDto;
-import com.jpql.entities.cart.CartItems;
-import com.jpql.entities.product.ProductEntity;
 import com.jpql.service.cart.CartItemsService;
 import com.jpql.service.product.ProductService;
 import com.jpql.usermodel.User;
@@ -21,12 +12,9 @@ import com.jpql.usermodel.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +44,7 @@ public class CartItemsController {
         String email = request.getUserPrincipal().getName();
         
         cartItemsService.addToCart(cart, email);
-        return ResponseEntity.ok().body("Berhasil");
+        return ResponseEntity.ok().body(cart + " berhasil dibuat");
     }
     
 }

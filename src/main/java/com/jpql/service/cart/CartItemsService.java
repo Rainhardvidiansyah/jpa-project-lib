@@ -1,10 +1,6 @@
 package com.jpql.service.cart;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.jpql.Repository.UserRepo;
@@ -58,6 +54,9 @@ public class CartItemsService {
         cartItemsRepo.save(cart);
         productService.saveProduct(product);
     }
+    
+    //Logic to Retrieve total 
+
     
     
      
