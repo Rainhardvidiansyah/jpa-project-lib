@@ -88,7 +88,7 @@ public class UserService implements UserDetailsService{
         List<Role> userRole = user.getRole();
         List<Role> roles = new ArrayList<>();
         if(userRole == null){
-            Role role = roleRepo.findByName(ERole.USER).orElseThrow(() -> new RuntimeException("message"));
+            Role role = roleRepo.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("message"));
             roles.add(role);
         }
         user.setRole(roles);

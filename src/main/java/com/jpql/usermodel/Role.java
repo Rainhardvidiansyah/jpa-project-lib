@@ -9,11 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_role")
 @Data
+
 public class Role {
 
     @Id 
@@ -23,6 +26,14 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     private ERole name;
+
+    public Role(){}
+
+    public Role(ERole name) {
+        this.name = name;
+    }
+
+    
 
     
 }

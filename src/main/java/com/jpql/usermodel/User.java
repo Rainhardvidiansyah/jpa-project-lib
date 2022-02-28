@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
+import com.jpql.entities.cart.CartItems;
 import com.jpql.entities.favourite.UserWishlist;
 import com.jpql.helper.audit.Auditing;
 
@@ -79,6 +79,8 @@ public class User extends Auditing{
     @OneToOne(mappedBy = "user")
     private UserWishlist wishlist;
 
+    @OneToMany(mappedBy = "user")
+    private Set<CartItems> cartItems;
 
     public User(String fullName, String email, String password) {
         this.fullName = fullName;

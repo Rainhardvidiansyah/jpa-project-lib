@@ -1,8 +1,8 @@
 package com.jpql.usermodel;
 
 public enum ERole {
-    USER,
-    ADMIN,
-    DEV
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_DEV
     
 }

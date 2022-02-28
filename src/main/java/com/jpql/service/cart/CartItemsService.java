@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.cartitem.CartItemsRepo;
 import com.jpql.dto.cart.CartDto;
 import com.jpql.entities.cart.CartItems;
 import com.jpql.entities.product.ProductEntity;
 import com.jpql.service.product.ProductService;
+import com.jpql.usermodel.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,19 +33,27 @@ public class CartItemsService {
     @Autowired
     private ProductService productService;
 
-    public void addToCart(CartDto cartDto){
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    public void addToCart(CartDto cartDto, String email){
         ProductEntity product = productService.findProductById(cartDto.getProductId());
         if(product == null){
             throw new RuntimeException("Product tidak ada/habis");
         }else if(cartDto.getQuantity() > product.getStocks()){
             throw new RuntimeException("Jumlah pesanan melebihi stok barang!");
         }
+        User user = userRepo.findByEmail(email).orElse(null);
         int addProduct = cartDto.getQuantity();
         int productStocks = product.getStocks();
         int substractResult = productStocks - addProduct;
         CartItems cart = new CartItems();
         cart.setQuantity(cartDto.getQuantity());
         cart.setProductEntity(product);
+        cart.setUser(user);
         product.setStocks(substractResult);
         cartItemsRepo.save(cart);
         productService.saveProduct(product);
