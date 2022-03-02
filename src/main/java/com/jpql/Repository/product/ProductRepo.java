@@ -27,6 +27,9 @@ public interface ProductRepo extends JpaRepository<ProductEntity, Long>{
 
     ProductEntity findByPrice(Double price);
 
+    //(SELECT p FROM ProductEntity p ORDER BY p.price)
+    //List<ProductEntity> findProductByLowerPrice(Double price);
+
     
 
 

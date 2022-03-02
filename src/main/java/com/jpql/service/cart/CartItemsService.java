@@ -1,6 +1,9 @@
 package com.jpql.service.cart;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.jpql.Repository.UserRepo;
@@ -55,7 +58,13 @@ public class CartItemsService {
         productService.saveProduct(product);
     }
     
-    //Logic to Retrieve total 
+    //Logic to Retrieve total
+    public CartItems showUserAndProductAdded(int quantity, String email){
+        User user = userRepo.findByEmail(email).orElse(null);
+        CartItems cartItems = cartItemsRepo.findAllByQuantity(quantity);
+        
+        return cartItems;
+    }
 
     
     
