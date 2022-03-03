@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
 
     @Autowired
@@ -69,7 +69,7 @@ public class ProductController {
          return new ResponseEntity<>(productResponse, HttpStatus.OK);
      }
 
-     //@PreAuthorize("hasRole('USER')")
+     @PreAuthorize("hasRole('USER')")
      @PostMapping("/search")
      public ResponseEntity<?> getByName(@RequestBody SearchHandling searchHandling){
          modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
