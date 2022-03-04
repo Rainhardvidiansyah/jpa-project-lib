@@ -49,3 +49,4 @@ src/main/java/com/jpql/entities/testing/TestingController.java
 src/test.drawio
 src/main/java/com/jpql/service/cart/GetUserCartItems.java
 src/apispecs.drawio
+src/main/java/com/jpql/usermodel/RoleDb.java
