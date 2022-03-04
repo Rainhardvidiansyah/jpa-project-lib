@@ -1,9 +1,9 @@
 package com.jpql.controller.product;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import com.jpql.dto.product.ProductResponse;
 import com.jpql.entities.product.ProductEntity;
@@ -50,7 +50,8 @@ public class ProductController {
      **/
 
 
-     @GetMapping("/all")
+     @GetMapping("/getall")
+     //@PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
      public ResponseEntity<?> testing(){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         List <ProductEntity> product = productService.findAllProduct();
@@ -63,14 +64,16 @@ public class ProductController {
      }
 
      @GetMapping("/{id}")
+     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
      public ResponseEntity<?> findProductId(@PathVariable("id") Long productId){
          ProductEntity product = productService.findProductById(productId);
          ProductResponse productResponse = modelMapper.map(product, ProductResponse.class);
          return new ResponseEntity<>(productResponse, HttpStatus.OK);
      }
 
-     @PreAuthorize("hasRole('USER')")
+     
      @PostMapping("/search")
+     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
      public ResponseEntity<?> getByName(@RequestBody SearchHandling searchHandling){
          modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
        List<ProductEntity> productEntities = productService.getProductNameLike(searchHandling.getSearchData());
@@ -83,6 +86,7 @@ public class ProductController {
     }
 
     @PostMapping("/description")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
     public ResponseEntity<?> getByProductDescription(@RequestBody SearchHandling searchHandling){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
       List<ProductEntity> productEntities = productService.getProductDescription(searchHandling.getSearchData());
@@ -95,6 +99,7 @@ public class ProductController {
    }
 
    @GetMapping("/cek-description/{description}")
+   @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
    public ResponseEntity<?> findAllDescription(@PathVariable("description") String productDescription){
        List<ProductEntity> productEntities = productService.getProductDescription(productDescription);
        List<ProductResponse> responses = new ArrayList<ProductResponse>();
@@ -112,7 +117,6 @@ public class ProductController {
    public List<Double> searchDataPrice(ProductEntity productEntity){
        return productService.orderedPrice(productEntity.getPrice());
    }
-      
 
 
 

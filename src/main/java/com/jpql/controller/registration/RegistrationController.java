@@ -1,7 +1,6 @@
 package com.jpql.controller.registration;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.validation.Valid;
 
@@ -10,8 +9,6 @@ import com.jpql.dto.errorhandling.ResponseData;
 import com.jpql.dto.registration.RegistrationRequest;
 import com.jpql.service.UserService;
 import com.jpql.service.verificationtoken.VerificationTokenService;
-import com.jpql.usermodel.ERole;
-import com.jpql.usermodel.Role;
 import com.jpql.usermodel.User;
 import com.jpql.usermodel.VerificationToken;
 import com.jpql.utilities.ErrorUtils;
@@ -21,7 +18,6 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/auth")
 public class RegistrationController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);

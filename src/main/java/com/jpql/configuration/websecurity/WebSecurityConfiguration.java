@@ -70,9 +70,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/api/product/all").permitAll()
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/api/auth/registration").permitAll()
+                .antMatchers("/api/product/getall").permitAll()
+                .antMatchers("/api/authlogin").permitAll()
                 //.antMatchers("/cartitem/*/**").permitAll()
 				.anyRequest().authenticated();
 

@@ -3,7 +3,7 @@ package com.jpql.usermodel;
 import java.util.Arrays;
 
 import com.jpql.Repository.UserRepo;
-import com.jpql.Repository.role.RoleRepo;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,13 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AdminDb implements CommandLineRunner{
+    
     @Autowired
     private UserRepo userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepo roleRepo;
+   
 
+   
 
 
 
@@ -29,6 +30,10 @@ public class AdminDb implements CommandLineRunner{
             new User("ADMIN", "admin@gmail.com", passwordEncoder.encode("admin")),
             new User("DEV", "dev@gmail.com", passwordEncoder.encode("dev"))
         ));
+
+        
+
+        
     }
 
 
