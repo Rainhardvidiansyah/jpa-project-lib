@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class RegistrationController {
 
@@ -64,6 +65,7 @@ public class RegistrationController {
         responseData.setStatus(true);
         responseData.setPayload(modelMapper.map(user, RegistrationRequest.class));
         //return new ResponseEntity<>(HttpStatus.OK);
+        logger.info("User: {} just registered", request.getFullName());
         return ResponseEntity.ok().body("Registrasi Diterima");
     }
 
