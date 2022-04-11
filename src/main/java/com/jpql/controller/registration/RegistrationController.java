@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class RegistrationController {
 
