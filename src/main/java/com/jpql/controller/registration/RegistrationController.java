@@ -38,9 +38,6 @@ public class RegistrationController {
 
 
     @Autowired
-    private RoleRepo roleRepo;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
