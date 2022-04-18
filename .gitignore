@@ -36,12 +36,11 @@ build/
 
 
 RoleService.java
-src/main/resources/application.properties
 src/main/java/com/jpql/controller/TestingEndPoint.java
 src/main/java/com/jpql/dto/RequestRole.java
 
 src/main/java/com/jpql/service/cart/TestingCart.java
-src/main/resources/application.properties
+
 src/main/java/com/jpql/entities/testing/TestingService.java
 src/main/java/com/jpql/entities/testing/TestingRepo.java
 src/main/java/com/jpql/entities/testing/TestingCart.java
