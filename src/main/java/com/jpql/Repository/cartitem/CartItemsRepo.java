@@ -1,5 +1,7 @@
 package com.jpql.Repository.cartitem;
 
+import java.util.List;
+
 import com.jpql.entities.cart.CartItems;
 import com.jpql.usermodel.User;
 
@@ -14,6 +16,8 @@ public interface CartItemsRepo extends JpaRepository<CartItems, Long>{
 
     //@Query("select c from CartItems c  where c.price = ?1")
     public CartItems findAllByQuantity(int quantity);
+
+    List<CartItems> findAllByUserOrderByCreatedDateDesc(User user);
 
 
     

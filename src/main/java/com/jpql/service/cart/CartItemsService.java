@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.cartitem.CartItemsRepo;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-
 public class CartItemsService {
 
     private static Logger log = LoggerFactory.getLogger(CartItemsService.class);
@@ -38,6 +38,7 @@ public class CartItemsService {
     @Autowired
     private UserRepo userRepo;
 
+    @Transactional
     public void addToCart(CartDto cartDto, String email){
         ProductEntity product = productService.findProductById(cartDto.getProductId());
         if(product == null){
@@ -58,11 +59,10 @@ public class CartItemsService {
         productService.saveProduct(product);
     }
     
-    //Logic to Retrieve total
+    //Logic to Retrieve User and total orders
     public CartItems showUserAndProductAdded(int quantity, String email){
         User user = userRepo.findByEmail(email).orElse(null);
         CartItems cartItems = cartItemsRepo.findAllByQuantity(quantity);
-        
         return cartItems;
     }
 

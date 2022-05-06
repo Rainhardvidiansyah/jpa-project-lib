@@ -77,18 +77,8 @@ public class ProductService {
             LOGGER.debug("INI LIHAT HASILNYA: ", prices);
             LOGGER.info("TESTING");
         }
-        
         return prices;
-        
         }
-        
-        
-        public void printLogger(Double price){
-            LOGGER.info("test",orderedPrice(price));
-        }
-        
-        
-        
         
 
     }

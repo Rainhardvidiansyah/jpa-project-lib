@@ -58,7 +58,7 @@ public class ProductEntity extends Auditing implements Serializable{
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    private Double price;
+    private double price;
 
     private int stocks;
 
