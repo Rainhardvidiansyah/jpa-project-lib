@@ -14,7 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor @AllArgsConstructor
 public class CartAndUserDto {
 
-    private List<CartItemsDto> cartItems;
+    // private List<CartItemsDto> cartItems;
+    private List<CartItemsProductSpecs> cartItems;
     private double totalCost;
     
 

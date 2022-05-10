@@ -12,14 +12,17 @@ import lombok.Setter;
 @Getter @Setter 
 @AllArgsConstructor @NoArgsConstructor
 public class CartItemsDto {
-    private Long id;
+    
+    private long productId;
     private int quantity;
-    private ProductEntity productEntity;
+    private String productName;
+    private double price;
 
     public CartItemsDto(CartItems cartItems){
-        this.id = cartItems.getCartItemsId();
+        this.setProductId(cartItems.getProductEntity().getProductId());
         this.quantity = cartItems.getQuantity();
-        this.setProductEntity(cartItems.getProductEntity());
+        this.setProductName(cartItems.getProductEntity().getProductName());
+        this.setPrice(cartItems.getProductEntity().getPrice());
     }
 
 }

@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import com.jpql.Repository.UserRepo;
 import com.jpql.Repository.cartitem.CartItemsRepo;
 import com.jpql.dto.cart.CartDto;
+import com.jpql.dto.errorhandling.ResponseMessage;
 import com.jpql.entities.cart.CartItems;
 import com.jpql.entities.product.ProductEntity;
 import com.jpql.service.product.ProductService;
@@ -58,20 +59,5 @@ public class CartItemsService {
         cartItemsRepo.save(cart);
         productService.saveProduct(product);
     }
-    
-    //Logic to Retrieve User and total orders
-    public CartItems showUserAndProductAdded(int quantity, String email){
-        User user = userRepo.findByEmail(email).orElse(null);
-        CartItems cartItems = cartItemsRepo.findAllByQuantity(quantity);
-        return cartItems;
-    }
 
-    
-    
-     
-       
-   
-
-    
-    
 }
