@@ -13,12 +13,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user_address")
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @ToString
 public class Address {
 
     @Id
@@ -32,7 +33,7 @@ public class Address {
     private String houseNumber;
 
     @Column(name = "kelurahan", length = 100)
-    private String Urban_village;
+    private String urbanVillage;
 
     @Column(name = "kecamatan", length = 100)
     private String district;
@@ -43,9 +44,10 @@ public class Address {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    // @OneToOne
+    // @JoinColumn(name = "user_id", referencedColumnName = "user_id")
 
+    @OneToOne(mappedBy = "address")
+    private User user;
     
 }

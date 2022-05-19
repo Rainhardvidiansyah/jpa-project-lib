@@ -107,7 +107,7 @@ public class CartItemsController {
         cartItems.setQuantity(editQuantityCart.getQuantity());
         editQuantityService.editQuantity(cartItemsId, user, cartItems.getQuantity());
         log.info("This user is: {} ", user.getFullName());
-        log.info("Removed product: ", cartItems.getCartItemsId() + " " + cartItems.getQuantity());
+        log.info("Removed product: {} and {} ", cartItems.getCartItemsId() + " " + cartItems.getQuantity());
         return new ResponseEntity<>(new ResponseMessage(true, user.getFullName() + " just removed product successfully"), HttpStatus.OK);
     }
     

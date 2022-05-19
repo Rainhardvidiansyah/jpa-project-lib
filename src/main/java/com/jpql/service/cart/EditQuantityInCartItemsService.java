@@ -18,7 +18,7 @@ public class EditQuantityInCartItemsService {
     @Autowired
     private CartItemsRepo cartRepo;
 
-    //@Transactional
+    @Transactional
     public void editQuantity(Long cartItemsId, User user, int quantity){
         Optional<CartItems> listCartItems = cartRepo.findById(cartItemsId);
         if(listCartItems.isEmpty()){

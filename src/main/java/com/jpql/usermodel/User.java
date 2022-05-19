@@ -23,9 +23,11 @@ import com.jpql.entities.favourite.UserWishlist;
 import com.jpql.helper.audit.Auditing;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
@@ -33,6 +35,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString @Builder
 
 
 public class User extends Auditing{
@@ -72,8 +75,11 @@ public class User extends Auditing{
     CATATAN TAMBAHAN: (referencedColumnName = "addressId")
     ITU HARUS BEGITU, KALAU PAKAI "ID" SAJA, NANTI AKAN ERROR
     */
-    @OneToOne(mappedBy = "user")
+    //@OneToOne(mappedBy = "user")
     //@JoinColumn(name = "address_id", referencedColumnName = "addressId")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
 
     @OneToOne(mappedBy = "user")
