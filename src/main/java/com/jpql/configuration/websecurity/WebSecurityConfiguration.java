@@ -70,12 +70,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-                //.antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/auth/registration").permitAll()
-                .antMatchers("/api/product/getall").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
-                .antMatchers("/api/sorted/**").permitAll()
-                //.antMatchers("/cartitem/*/**").permitAll()
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

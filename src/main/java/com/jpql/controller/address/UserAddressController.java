@@ -12,6 +12,7 @@ import com.jpql.service.address.AddressService;
 import com.jpql.usermodel.Address;
 import com.jpql.usermodel.User;
 
+import org.apache.catalina.connector.Response;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,8 +48,8 @@ public class UserAddressController {
     @Autowired
     private HttpServletRequest request;
 
-    private ResponseMessage responseMessage = new ResponseMessage(true, "Success");
-    private ResponseMessage exceptionMessage = new ResponseMessage(false, "A trouble has occured");
+    private ResponseMessage responseMessage = new ResponseMessage<>(true, "Success");
+    private ResponseMessage exceptionMessage = new ResponseMessage<>(false, "Trouble is happening");
 
     @PostMapping("/save/address")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
@@ -70,20 +73,28 @@ public class UserAddressController {
         User user = userRepo.findByEmail(email).orElse(null);
         addressService.editAddress(addressId, user, address);
         
-        LOGGER.info("User {} just updated the address to {}", user.getFullName(), address);
+        LOGGER.info("{} just updated the address to {}", user.getFullName(), address);
         LOGGER.info("Id {} from address", address.getAddressId());
         return new ResponseEntity<>(
             responseMessage, HttpStatus.OK);
     }
 
 
-    @GetMapping("/myaddress")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
-    public String seeAddressFromUSer(){
+    @GetMapping(value = "/myprofile")
+    @ResponseBody
+    public ResponseEntity<?> getUserAddressByUser(@RequestParam Long addressid){
         String email = request.getUserPrincipal().getName();
         User user = userRepo.findByEmail(email).orElse(null);
-        String address = user.getAddress().getStreet();
-        LOGGER.info("User {} is living in {}", user.getFullName(), user.getAddress().getStreet());
-        return address;
+        if(addressid == null || addressid != user.getAddress().getAddressId()){
+            return new ResponseEntity<>(new ResponseMessage<>(false, "Hello " + user.getFullName() +" Your address not Found!"), HttpStatus.BAD_REQUEST);
+        }
+        addressService.userAddress(user, addressid);
+        LOGGER.info("{} just hit this end-point, and the addressid is {}", user.getFullName(), addressid);
+        return new ResponseEntity<>(new ResponseMessage<>(true, "message", user.getAddress()), HttpStatus.OK);
     }
+
+    
+
+
+
 }

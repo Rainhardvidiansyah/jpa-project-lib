@@ -58,24 +58,17 @@ public class AddressService {
         // userRepo.save(user);
    }
 
+   public User userAddress(User user, Long id){
+       Address address = addressRepo.findById(id).orElseThrow(() -> new AddressNotFoundException("Address Not Found"));
+       if(address.getUser() != user){
+            throw new RuntimeException("Not Your Address");
+       }
+       return userRepo.findAddress(address);
+   }
 
-   /**
-    * 
-     @Transactional
-    public void editQuantity(Long cartItemsId, User user, int quantity){
-        Optional<CartItems> listCartItems = cartRepo.findById(cartItemsId);
-        if(listCartItems.isEmpty()){
-            throw new RuntimeException("Product not found");
-        }
-        CartItems cartItems = listCartItems.get();
-        if(cartItems.getUser() != user){
-            throw new RuntimeException("This product doens't belong to you!");
-        }
-        int result = cartItems.getQuantity() - quantity;
-        cartItems.setQuantity(result);
-        cartRepo.save(cartItems);
-    }
-    */
+   
+
+  
 
     
 }

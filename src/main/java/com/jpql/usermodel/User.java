@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpql.entities.cart.CartItems;
 import com.jpql.entities.favourite.UserWishlist;
 import com.jpql.helper.audit.Auditing;
@@ -51,6 +55,7 @@ public class User extends Auditing{
     @Column(name = "user_email", length = 150, nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(name = "password_user", nullable = false)
     private String password;
 
@@ -78,6 +83,7 @@ public class User extends Auditing{
     //@OneToOne(mappedBy = "user")
     //@JoinColumn(name = "address_id", referencedColumnName = "addressId")
 
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
@@ -94,11 +100,13 @@ public class User extends Auditing{
         this.password = password;
     }
 
-    public User(String fullName, String email, String password, List<Role> role) {
+
+
+    public User(String fullName, String email, String password, Address address) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.address = address;
     }
 
 

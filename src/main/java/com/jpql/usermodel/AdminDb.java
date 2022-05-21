@@ -1,6 +1,8 @@
 package com.jpql.usermodel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.jpql.Repository.UserRepo;
 
@@ -18,10 +20,7 @@ public class AdminDb implements CommandLineRunner{
     @Autowired
     private PasswordEncoder passwordEncoder;
    
-
-   
-
-
+    
 
     @Override
     public void run(String... args) throws Exception {
@@ -30,6 +29,12 @@ public class AdminDb implements CommandLineRunner{
             new User("ADMIN", "admin@gmail.com", passwordEncoder.encode("admin")),
             new User("DEV", "dev@gmail.com", passwordEncoder.encode("dev"))
         ));
+
+        /*
+        Seeder:
+        insert into role_user_tbl(user_id, role_id)
+        values(1, 1);
+        */
 
         
 

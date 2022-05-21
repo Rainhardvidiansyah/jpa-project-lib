@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-
+import com.jpql.dto.errorhandling.ResponseMessage;
 import com.jpql.dto.product.ProductResponse;
 import com.jpql.entities.product.ProductEntity;
 import com.jpql.helper.SearchHandling;
@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -51,8 +53,8 @@ public class ProductController {
 
 
      @GetMapping("/getall")
-     //@PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
-     public ResponseEntity<?> testing(){
+     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
+     public ResponseEntity<?> getAllProduct(){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         List <ProductEntity> product = productService.findAllProduct();
         List<ProductResponse> responses = new ArrayList<ProductResponse>();
@@ -63,10 +65,15 @@ public class ProductController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
      }
 
-     @GetMapping("/{id}")
+     @GetMapping(value = "/find/by")
      @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('DEV')")
-     public ResponseEntity<?> findProductId(@PathVariable("id") Long productId){
-         ProductEntity product = productService.findProductById(productId);
+     @ResponseBody
+     public ResponseEntity<?> findProductId(@RequestParam Long productid){
+         ProductEntity product = productService.findProductById(productid);
+         if(productid != product.getProductId()){
+             ResponseMessage messages = new ResponseMessage<>(false, "Product not found!");
+             return new ResponseEntity<>(messages, HttpStatus.OK);
+         }
          ProductResponse productResponse = modelMapper.map(product, ProductResponse.class);
          return new ResponseEntity<>(productResponse, HttpStatus.OK);
      }
@@ -112,15 +119,6 @@ public class ProductController {
        }
        return new ResponseEntity<>(responses, HttpStatus.OK);
    }
-   
-   @GetMapping("/sortedproduct")
-   public List<Double> searchDataPrice(ProductEntity productEntity){
-       return productService.orderedPrice(productEntity.getPrice());
-   }
-
-
-
-
 
 
    }

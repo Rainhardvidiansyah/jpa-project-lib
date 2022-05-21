@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/sorted")
+@RequestMapping("/api/product")
 public class ProductPriceView {
 
     private static final Logger log = LoggerFactory.getLogger(ProductPriceView.class);
@@ -25,14 +25,23 @@ public class ProductPriceView {
     @Autowired
     private ProductRepo productRepo;
 
-    @GetMapping("/product/price")
-    public List<ProductEntity> getProductPrice(){
-        List<ProductEntity> products = new ArrayList<>();
+    @GetMapping("/sorted/less/price")
+    public List<ProductEntity> getSmallPriceFromProduct(){
         List<ProductEntity> a = productRepo.findAll();
-        List<ProductEntity> testing =
+        List<ProductEntity> sorting =
         a.stream().filter(b -> b.getPrice() < 20.0).collect(Collectors.toList());
-        log.info("Get Price from 20.0 : {}", testing);
-        return testing;
+        log.info("Get Price from 20.0 : {}", sorting);
+        return sorting;
+    }
+
+    @GetMapping("/sorted/high/price")
+    public List<ProductEntity> getHighPriceFromProduct(){
+        // List<ProductEntity> products = new ArrayList<>();
+        List<ProductEntity> a = productRepo.findAll();
+        List<ProductEntity> sorting =
+        a.stream().filter(b -> b.getPrice() > 20.0).collect(Collectors.toList());
+        log.info("Get Price from 20.0 : {}", sorting);
+        return sorting;
     }
     
 }

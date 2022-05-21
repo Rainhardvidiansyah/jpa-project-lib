@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,7 +50,24 @@ public class Address {
     // @OneToOne
     // @JoinColumn(name = "user_id", referencedColumnName = "user_id")
 
+    
+    @JsonBackReference
     @OneToOne(mappedBy = "address")
     private User user;
+
+    public Address(Long addressId, String street, String houseNumber, String urbanVillage, String district,
+            String zipCode, String phoneNumber) {
+        this.addressId = addressId;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.urbanVillage = urbanVillage;
+        this.district = district;
+        this.zipCode = zipCode;
+        this.phoneNumber = phoneNumber;
+    }
+
+    
+
+    
     
 }

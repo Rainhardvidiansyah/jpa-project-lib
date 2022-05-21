@@ -51,7 +51,7 @@ public class ProductEntity extends Auditing implements Serializable{
 
     @Lob
     @Column(name = "product_image", length = Integer.MAX_VALUE)
-    private Blob picture;
+    private String picture;
 
     private String productDescription;
 
@@ -77,10 +77,11 @@ public class ProductEntity extends Auditing implements Serializable{
         return level;
     }
 
-    public ProductEntity(String productName, String productDescription, 
+    public ProductEntity(String productName, String picture,String productDescription, 
                         Double price, int stocks, LocalDate madeAt, 
                         LocalDate expiredAt) {
         this.productName = productName;
+        this.picture = picture;
         this.productDescription = productDescription;
         this.price = price;
         this.stocks = stocks;
