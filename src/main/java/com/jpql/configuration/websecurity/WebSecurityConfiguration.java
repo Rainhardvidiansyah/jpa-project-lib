@@ -72,11 +72,32 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.authorizeRequests()
                 .antMatchers("/api/auth/registration").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
-				.anyRequest().authenticated();
+				.anyRequest().authenticated()
+                //STARTS HERE:
+                .and().exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
+
+    /**
+     
+     @return
+     protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable().authorizeRequests()           
+            .antMatchers("/forgetPassword").permitAll()
+            .antMatchers("/registerUser").permitAll()
+            .antMatchers("/login").permitAll()
+            .anyRequest().authenticated()
+            .and().exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .and().formLogin().loginPage("/login").loginProcessingUrl("/login")
+            .defaultSuccessUrl("/index.html").failureUrl("/login?error")
+            .and().logout().logoutUrl("/logout");
+
+    http.addFilterBefore(this.jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
+}
+     */
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
