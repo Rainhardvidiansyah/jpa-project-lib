@@ -41,37 +41,37 @@ public class UserSeeder implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        // Role roleUSer = new Role(ERole.ROLE_USER);
-        // Role roleAdmin = new Role(ERole.ROLE_ADMIN);
-        // Role roleDev = new Role(ERole.ROLE_DEV);
-        // roleRepo.saveAll(List.of(
-        //     roleUSer, roleAdmin, roleDev
-        // ));
+        Role roleUSer = new Role(ERole.ROLE_USER);
+        Role roleAdmin = new Role(ERole.ROLE_ADMIN);
+        Role roleDev = new Role(ERole.ROLE_DEV);
+        roleRepo.saveAll(List.of(
+            roleUSer, roleAdmin, roleDev
+        ));
 
-        // List<Role> roleForRainhard = new ArrayList<>();
-        // roleForRainhard.add(roleUSer);
-        // roleForRainhard.add(roleAdmin);
+        List<Role> roleForRainhard = new ArrayList<>();
+        roleForRainhard.add(roleUSer);
+        roleForRainhard.add(roleAdmin);
 
-        // List<Role> roleForUser = new ArrayList<>();
-        // roleForUser.add(roleUSer);
+        List<Role> roleForUser = new ArrayList<>();
+        roleForUser.add(roleUSer);
 
-        // User rainhard = new User("Rainhard as Admin and User", "rainhard@gmail.com", passwordEncoder.encode("rainhard"));
-        // rainhard.setRole(roleForRainhard);
-        // userRepo.save(rainhard);
+        User rainhard = new User("Rainhard as Admin and User", "rainhard@gmail.com", passwordEncoder.encode("rainhard"));
+        rainhard.setRole(roleForRainhard);
+        userRepo.save(rainhard);
 
-        // User user = new User("Rainhard as User", "rainhardvidians@gmail.com", passwordEncoder.encode("user"));
-        // user.setRole(roleForUser);
-        // userRepo.save(user);
+        User user = new User("Rainhard as User", "rainhardvidians@gmail.com", passwordEncoder.encode("user"));
+        user.setRole(roleForUser);
+        userRepo.save(user);
 
-        // User gofur = new User
-        // ("Baldatun Gofur as User", "baldatungofur@gmail.com", passwordEncoder.encode("gofur"));
-        // gofur.setRole(roleForUser);
-        // userRepo.save(gofur);
+        User gofur = new User
+        ("Baldatun Gofur as User", "baldatungofur@gmail.com", passwordEncoder.encode("gofur"));
+        gofur.setRole(roleForUser);
+        userRepo.save(gofur);
 
-        // log.info("Saved User: {}", rainhard);
+        log.info("Saved User: {}", rainhard);
 
-        //Send email to user woh just logged-in is working!
-        //emailService.sendEmail(user.getEmail(), "Baru masuk ke cengek bandung", "Ada", new Date());
+        // Send email to user who just logged-in is working!
+        // emailService.sendEmail(user.getEmail(), "Baru masuk ke cengek bandung", "Ada", new Date());
     }
     
 }

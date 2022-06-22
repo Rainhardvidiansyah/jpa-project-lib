@@ -36,6 +36,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint{
         body.put("error", "unauthorized");
         body.put("message", authException.getMessage());
         body.put("path", request.getServletPath());
+        body.put("cause", "You have not registered in this application");
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);

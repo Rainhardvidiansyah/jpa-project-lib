@@ -70,7 +70,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-                .antMatchers("/api/auth/registration").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
 				.anyRequest().authenticated();
                 //STARTS HERE:

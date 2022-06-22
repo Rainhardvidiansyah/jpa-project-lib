@@ -24,7 +24,6 @@ public class RegistrationRequest {
 
     private String fullName;
 
-
     @EmailValidator(message = "Email Sudah Terdaftar...")
     private String email;
 

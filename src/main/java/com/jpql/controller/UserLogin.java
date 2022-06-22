@@ -14,6 +14,7 @@ import com.jpql.usermodel.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,10 +48,13 @@ public class UserLogin {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		if(authentication.getPrincipal() == null){
+			return new ResponseEntity<>("You have not registered in this application", HttpStatus.BAD_REQUEST);
+		}
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		log.info("User just logged in: {}", loginRequest.getEmail());
 		
-		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();		
+		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = user.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());

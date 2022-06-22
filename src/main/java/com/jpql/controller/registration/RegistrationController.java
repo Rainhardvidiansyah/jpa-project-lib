@@ -2,6 +2,7 @@ package com.jpql.controller.registration;
 
 
 
+import javax.management.RuntimeErrorException;
 import javax.validation.Valid;
 
 import com.jpql.dto.errorhandling.ResponseData;
@@ -65,6 +66,15 @@ public class RegistrationController {
         //return new ResponseEntity<>(HttpStatus.OK);
         log.info("User: {} just registered", request.getFullName());
         return ResponseEntity.ok().body("Registrasi Diterima");
+    }
+
+    @PostMapping("/daftar")
+    public void registration(@Valid @RequestBody RegistrationRequest registrationRequest, Errors errors){
+        if(errors.hasErrors()){
+            log.info("An error is occuring");
+        }
+        User user = modelMapper.map(registrationRequest, User.class);
+        userService.registration(user);
     }
 
     @GetMapping("/confirmation/{token}")
