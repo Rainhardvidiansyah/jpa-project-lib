@@ -12,6 +12,7 @@ import com.jpql.usermodel.User;
 import com.jpql.usermodel.VerificationToken;
 import com.jpql.utilities.ErrorUtils;
 
+import lombok.extern.slf4j.Slf4j;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -31,9 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
+@Slf4j
 public class RegistrationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
 
     @Autowired
@@ -61,7 +63,7 @@ public class RegistrationController {
         responseData.setStatus(true);
         responseData.setPayload(modelMapper.map(user, RegistrationRequest.class));
         //return new ResponseEntity<>(HttpStatus.OK);
-        logger.info("User: {} just registered", request.getFullName());
+        log.info("User: {} just registered", request.getFullName());
         return ResponseEntity.ok().body("Registrasi Diterima");
     }
 
