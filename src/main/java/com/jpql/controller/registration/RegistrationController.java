@@ -4,7 +4,6 @@ package com.jpql.controller.registration;
 
 import javax.validation.Valid;
 
-import com.jpql.Repository.role.RoleRepo;
 import com.jpql.dto.errorhandling.ResponseData;
 import com.jpql.dto.registration.RegistrationRequest;
 import com.jpql.service.UserService;
@@ -66,13 +65,6 @@ public class RegistrationController {
         return ResponseEntity.ok().body("Registrasi Diterima");
     }
 
-
-    /**
-     MY PURPOSE HERE:
-     1. FIND TOKEN SO THAT THE RETURN VALUE IS TOKEN EXIST AND ACCEPTED
-     2. USER WITH USERNAME, FOR EXAMPLE, "RAINHARD" CAN LOGIN INTO APP
-     3.
-     */
     @GetMapping("/confirmation/{token}")
     public String confirmToken(@RequestParam(value = "token", required = false) String token){
         VerificationToken vToken = tokenService.findToken(token);
@@ -80,10 +72,6 @@ public class RegistrationController {
         return vToken + " ada";
     }
 
-
-    /* 
-    INI MASIH PERCOBAAN: BAGAIMANA JIKA DITINJAU DENGAN ID DARI TIAP-TIAP ENTITY
-     */
     @GetMapping("/gettoken")
     public VerificationToken getToken(Long id){
         return tokenService.getToken(id);
